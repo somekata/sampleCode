@@ -1,0 +1,43 @@
+getwd()
+dir()
+setwd("../")
+dir()
+setwd("bin")
+getwd()
+x <- 10   # 推奨される代入方法
+y = 20    # これも可能（ただし <- の方が一般的）
+print(x)
+print(y)
+x  # 変数名だけでも値を表示
+y
+v1 <- c(1, 2, 3, 4, 5)
+print(v1)
+v3 <- 1:10  # 1から10までの連続した数値
+print(v3)
+v4 <- seq(1, 10, by = 2)  # 1から10まで2刻み
+print(v4)
+v <- c(10, 20, 30, 40, 50)
+length(v)     # 要素数を取得
+sum(v)        # 合計
+mean(v)       # 平均
+max(v)        # 最大値
+min(v)        # 最小値
+v[1]   # 1番目の要素 (10)
+v[2:4] # 2～4番目の要素 (20, 30, 40)
+v[-1]  # 1番目を除くすべての要素
+m <- matrix(1:9, nrow = 3, ncol = 3)  # 3×3 の行列
+print(m)
+m <- matrix(1:9, nrow = 3, byrow = TRUE)
+print(m)
+dim(m)       # 行列のサイズを取得 (行×列)
+nrow(m)      # 行数を取得
+ncol(m)      # 列数を取得
+t(m)         # 転置（行と列を入れ替え）
+colSums(m)   # 列ごとの合計
+rowSums(m)   # 行ごとの合計
+colMeans(m)  # 列ごとの平均
+rowMeans(m)  # 行ごとの平均
+m[1, 2]   # 1行2列の要素
+m[ ,2]    # 2列目のすべての要素
+m[2, ]    # 2行目のすべての要素
+installed.packages()

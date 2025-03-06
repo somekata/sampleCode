@@ -1,0 +1,18 @@
+# 必要なライブラリを読み込む
+library(tidyverse)
+
+# サンプルデータの作成
+df <- tibble(
+  ID = 1:5,
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Score = c(85, 90, 78, 88, 92)
+)
+
+# 平均スコアを計算し、90以上の人を抽出
+df %>%
+  summarise(Average_Score = mean(Score)) %>%
+  print()
+
+df %>%
+  filter(Score >= 90) %>%
+  print()

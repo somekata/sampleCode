@@ -1,0 +1,14 @@
+# データを表示
+head(iris)
+
+# 基本統計量
+summary(iris)
+
+# 欠損値の確認
+sum(is.na(airquality))
+
+# 欠損値を平均値で補完
+airquality$Ozone[is.na(airquality$Ozone)] <- mean(airquality$Ozone, na.rm = TRUE)
+
+# 利用可能なデータセット一覧を表示
+data()

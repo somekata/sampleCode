@@ -1,0 +1,81 @@
+#installは初回のみ（ただしgooglecolabでは毎回削除される）
+install.packages("ggplot2")
+install.packages("plotly")
+install.packages("Rtsne")
+install.packages("umap")
+
+#PCA
+# 必要なライブラリ
+library(ggplot2)
+library(plotly)
+
+# PCAの実行
+pca_result <- prcomp(iris[,1:4], center = TRUE, scale. = TRUE)
+
+# PCAの結果をデータフレーム化
+pca_df <- as.data.frame(pca_result$x)
+pca_df$Species <- iris$Species  # 元のラベルを追加
+
+# ggplotで可視化
+ggplot(pca_df, aes(x = PC1, y = PC2, color = Species)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  ggtitle("PCA of Iris Dataset")
+
+# `plot()` で可視化
+plot(pca_result$x[,1:2], col = as.numeric(iris$Species), pch = 16,
+     main = "PCA of Iris Dataset", xlab = "PC1", ylab = "PC2")
+legend("topright", legend = levels(iris$Species), col = 1:3, pch = 16)
+
+# `ggplotly()` でインタラクティブ化
+p <- ggplot(pca_df, aes(x = PC1, y = PC2, color = Species)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  ggtitle("PCA of Iris Dataset")
+
+ggplotly(p)  # インタラクティブグラフ
+
+#TSNE
+# 必要なライブラリ 
+library(Rtsne)
+
+# t-SNEの実行（種類の列は除外）
+tsne_result <- Rtsne(iris[,1:4], perplexity = 30, theta = 0.5, check_duplicates = FALSE)
+
+# t-SNEの結果をデータフレーム化
+tsne_df <- as.data.frame(tsne_result$Y)
+tsne_df$Species <- iris$Species
+
+# ggplotで可視化
+ggplot(tsne_df, aes(x = V1, y = V2, color = Species)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  ggtitle("t-SNE of Iris Dataset")
+
+# plotで可視化
+plot(tsne_result$Y, col = as.numeric(iris$Species), pch = 16,
+     main = "t-SNE of Iris Dataset", xlab = "Dim1", ylab = "Dim2")
+legend("topright", legend = levels(iris$Species), col = 1:3, pch = 16)
+
+
+#UMAP
+# 必要なライブラリ
+library(umap)
+
+# UMAPの実行
+umap_result <- umap(iris[,1:4])
+
+# UMAPの結果をデータフレーム化
+umap_df <- as.data.frame(umap_result$layout)
+umap_df$Species <- iris$Species
+
+# ggplotで可視化
+ggplot(umap_df, aes(x = V1, y = V2, color = Species)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  ggtitle("UMAP of Iris Dataset")
+
+# plotで可視化
+plot(umap_result$layout, col = as.numeric(iris$Species), pch = 16,
+     main = "UMAP of Iris Dataset", xlab = "UMAP1", ylab = "UMAP2")
+legend("topright", legend = levels(iris$Species), col = 1:3, pch = 16)

@@ -1,0 +1,10 @@
+# kerasを読み込む
+library(keras)
+
+# モデルの定義
+model <- keras_model_sequential() %>%
+  layer_dense(units = 32, activation = 'relu', input_shape = c(10)) %>%
+  layer_dense(units = 1, activation = 'sigmoid')
+
+# モデルの概要を表示
+summary(model)

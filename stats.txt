@@ -1,0 +1,11 @@
+# 必要なライブラリを読み込む
+library(MASS)
+
+# Bostonデータセットを使用
+data("Boston")
+
+# 住宅価格 (medv) を説明変数とした線形回帰
+model <- lm(medv ~ crim + rm + age, data = Boston)
+
+# モデルの概要を表示
+summary(model)

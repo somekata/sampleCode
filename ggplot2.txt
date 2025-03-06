@@ -1,0 +1,15 @@
+# 必要なライブラリ
+library(ggplot2)
+
+# PCAの実行
+pca_result <- prcomp(iris[,1:4], center = TRUE, scale. = TRUE)
+
+# PCAの結果をデータフレーム化
+pca_df <- as.data.frame(pca_result$x)
+pca_df$Species <- iris$Species  # 元のラベルを追加
+
+# ggplotで可視化
+ggplot(pca_df, aes(x = PC1, y = PC2, color = Species)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  ggtitle("PCA of Iris Dataset")

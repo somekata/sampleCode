@@ -1,0 +1,59 @@
+# ダミーデータを作成して解析、作図する
+
+set.seed(123)  # 再現性のためのシード設定
+
+# ダミーデータの作成
+df <- data.frame(
+  ID = 1:10,
+  Score1 = sample(50:100, 10, replace = TRUE),  # 50~100のランダム整数
+  Score2 = sample(50:100, 10, replace = TRUE),
+  Category = sample(c("A", "B", "C"), 10, replace = TRUE),  # 3つのカテゴリ
+  Height = runif(10, 150, 190),  # 150~190のランダムな実数
+  Weight = rnorm(10, mean = 65, sd = 10)  # 平均65, SD10の正規分布
+)
+
+# データ確認
+print(df)
+plot(df$Score1, df$Score2,
+     main = "Score1 vs Score2",
+     xlab = "Score1",
+     ylab = "Score2",
+     col = "blue",
+     pch = 16)  # 丸い点
+hist(df$Height,
+     main = "Height Distribution",
+     xlab = "Height (cm)",
+     col = "lightblue",
+     border = "black")
+boxplot(df$Score1,
+        main = "Boxplot of Score1",
+        ylab = "Score1",
+        col = "lightgreen")
+# カテゴリの集計
+category_counts <- table(df$Category)
+
+# 棒グラフの描画
+barplot(category_counts,
+        main = "Category Distribution",
+        col = c("red", "blue", "green"),
+        xlab = "Category",
+        ylab = "Count")
+pairs(df[, c("Score1", "Score2", "Height", "Weight")],
+      main = "Scatterplot Matrix",
+      col = "blue",
+      pch = 16)
+# カテゴリ別の色を設定
+colors <- c("red", "blue", "green")
+category_colors <- colors[as.numeric(factor(df$Category))]
+
+plot(df$Score1, df$Height,
+     col = category_colors,
+     pch = 16,
+     main = "Score1 vs Height by Category",
+     xlab = "Score1",
+     ylab = "Height (cm)")
+
+# 凡例を追加
+legend("topright", legend = levels(factor(df$Category)), col = colors, pch = 16)
+
+# Base Rで動くが、PlayGroundでは作図できないので、作図部分はGoogleColabで動かす必要がある

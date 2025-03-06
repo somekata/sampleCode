@@ -1,0 +1,52 @@
+#csvを操作する方法
+#read.csv()（標準関数）
+df <- read.csv("data.csv", header = TRUE, stringsAsFactors = FALSE)
+head(df)
+#標準機能で使える
+#header = TRUE で最初の行をカラム名にする
+#stringsAsFactors = FALSE で文字列を factor にしない（R4.0以降はデフォルトで FALSE）
+
+#readr::read_csv()（高速で読み込む）
+library(readr)
+df <- read_csv("data.csv")
+head(df)
+#read.csv() より高速
+#文字列を factor ではなく 文字列 (character) として扱う
+#read_csv() の方がエラーメッセージが分かりやすい
+
+#data.table::fread()（超高速で読み込む）
+library(data.table)
+df <- fread("data.csv")
+head(df)
+#100MB 以上のCSV を扱う場合に最適
+#自動でデータ型を判定
+#fwrite(df, "output.csv") で高速にCSV書き出しも可能
+
+#その他の方法
+#readLines()（カスタム解析）
+lines <- readLines("data.csv")
+print(lines[1:5])  # 最初の5行を表示
+
+#readxl::read_excel()（Excelファイルも扱う）
+library(readxl)
+df <- read_excel("data.xlsx", sheet = 1)
+head(df)
+
+#textConnection()（文字列からCSVを読む）
+text_data <- "name,age,score
+Alice,25,85
+Bob,30,90
+Charlie,22,78"
+df <- read.csv(textConnection(text_data), header = TRUE)
+print(df)
+
+#readr::read_csv2()（セミコロン区切り）
+library(readr)
+df <- read_csv2("data.csv")  # セミコロン区切り
+head(df)
+
+#arrow::read_csv_arrow()（超高速 & メモリ効率良い）
+library(arrow)
+df <- read_csv_arrow("data.csv")
+head(df)
+

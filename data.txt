@@ -1,0 +1,117 @@
+library(dplyr)
+
+# サンプルデータ作成
+df <- data.frame(
+  ID = 1:6,
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve", "Frank"),
+  Score = c(85, 90, 78, 88, 92, 75)
+)
+
+# 平均スコアを計算
+df %>%
+  summarise(Average_Score = mean(Score))
+
+# スコア90以上の人を抽出
+df %>%
+  filter(Score >= 90)
+
+set.seed(123)
+data <- rnorm(100)  # 平均0, 標準偏差1 のランダムデータ
+
+mean(data)  # 平均
+sd(data)    # 標準偏差
+summary(data)  # 基本統計量
+
+group1 <- c(5.1, 4.9, 5.0, 5.2, 5.3)
+group2 <- c(6.1, 6.0, 6.2, 5.9, 6.3)
+
+t.test(group1, group2)
+
+library(caret)
+
+# サンプルデータ (iris)
+data(iris)
+
+# 訓練データとテストデータに分割
+set.seed(123)
+trainIndex <- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+trainData <- iris[trainIndex,]
+testData  <- iris[-trainIndex,]
+
+# k近傍法(KNN)モデルを作成
+model <- train(Species ~ ., data = trainData, method = "knn", tuneLength = 5)
+
+# 予測を行い、精度を確認
+predictions <- predict(model, testData)
+confusionMatrix(predictions, testData$Species)
+
+library(stringr)
+
+text <- "Hello, R programming!"
+
+# 文字列の長さ
+str_length(text)
+
+# 文字列の一部を抽出
+str_sub(text, 1, 5)  # "Hello"
+
+# 文字列の置換
+str_replace(text, "R", "Python")
+
+# 文字列を分割
+str_split(text, " ")
+
+library(lubridate)
+
+date1 <- ymd("2024-03-06")  # YYYY-MM-DD の形式で日付を作成
+date2 <- date1 + days(10)   # 10日後の日付を計算
+
+date1
+date2
+
+list.files()
+
+library(readr)
+
+# ローカルにある "data.csv" を読み込む
+df <- read_csv("data.csv")
+head(df)
+
+write.csv(df, "output.csv", row.names = FALSE)
+
+library(rvest)
+
+# Wikipediaのページを取得
+url <- "https://en.wikipedia.org/wiki/Web_scraping"
+page <- read_html(url)
+
+# ページ内の見出しを取得
+headings <- page %>%
+  html_nodes("h2") %>%
+  html_text()
+
+print(headings)
+
+library(parallel)
+
+# CPUコア数を取得
+numCores <- detectCores()
+
+# 並列計算の実行
+cl <- makeCluster(numCores)
+clusterEvalQ(cl, sqrt(100))
+stopCluster(cl)
+
+library(httr)
+
+# APIリクエスト
+response <- GET("https://api.github.com/repos/tidyverse/ggplot2")
+
+# 結果をJSONとして取得
+content(response, "parsed")
+
+sessionInfo()
+
+getwd()
+
+installed.packages()

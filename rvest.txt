@@ -1,0 +1,14 @@
+# ライブラリを読み込む
+library(rvest)
+
+# Wikipediaのサンプルページを取得
+url <- "https://en.wikipedia.org/wiki/Web_scraping"
+page <- read_html(url)
+
+# 見出しを取得
+headings <- page %>%
+  html_nodes("h2") %>%
+  html_text()
+
+# 結果を表示
+print(headings)
