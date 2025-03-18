@@ -1,12 +1,12 @@
-getwd()
+getwd()	# 現在のディレクトリ（working directory）の取得
+dir()	# 現在のディレクトリ内にあるディレクトリやファイルを表示する
+setwd("../")	#一つ上のディレクトリに移動する
 dir()
-setwd("../")
-dir()
-setwd("bin")
+setwd("bin")	#binディレクトリに移動する
 getwd()
 x <- 10   # 推奨される代入方法
 y = 20    # これも可能（ただし <- の方が一般的）
-print(x)
+print(x)  # xの値を表示
 print(y)
 x  # 変数名だけでも値を表示
 y
@@ -40,4 +40,4 @@ rowMeans(m)  # 行ごとの平均
 m[1, 2]   # 1行2列の要素
 m[ ,2]    # 2列目のすべての要素
 m[2, ]    # 2行目のすべての要素
-installed.packages()
+installed.packages()    # インストール済みのライブラリを表示する
