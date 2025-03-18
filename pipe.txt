@@ -1,0 +1,84 @@
+# Base R パイプ (|>) のサンプルコード
+# サンプルデータの作成
+df <- data.frame(
+  ID = 1:5,
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Score = c(85, 90, 78, 88, 92),
+  Age = c(20, 25, 22, 24, 23)
+)
+
+# パイプ演算子 (`|>`) を活用した一連の処理
+df |>
+  subset(Score >= 80) |>                    # スコアが80以上の人を抽出
+  transform(Result = ifelse(Score >= 90, "優秀", "合格")) |>  # 新しい列を追加
+  subset(select = -ID) |>                   # ID列を削除
+  subset(select = c(Name, Score, Result, Age)) |>  # 特定の列を並べ替え
+  (\(x) x[order(-x$Score), ])() |>         # スコアの降順でソート
+  print()
+
+df |>
+  aggregate(Score ~ Age, data = _, mean) |>  # 年齢ごとのスコア平均
+  print()
+
+df$Score[3] <- NA  # 欠損値を挿入
+
+df |>
+  na.omit() |>         # 欠損値の行を削除
+  transform(Score = replace(Score, is.na(Score), 0)) |>  # 欠損値を0で補完
+  print()
+
+df |>
+  transform(Name = tolower(Name)) |>    # 名前をすべて小文字に変換
+  print()
+
+# tidyverse のパイプ演算子 (%>%) とデータ操作のまとめ
+# ライブラリの読み込み
+library(tidyverse)
+
+# サンプルデータの作成
+df <- tibble(
+  ID = 1:5,
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Score = c(85, 90, 78, 88, 92),
+  Age = c(20, 25, 22, 24, 23)
+)
+
+df %>%
+  filter(Score >= 80) %>%                  # スコアが80以上の人を抽出
+  mutate(Result = if_else(Score >= 90, "優秀", "合格")) %>%  # 新しい列を追加
+  select(-ID) %>%                          # ID列を削除
+  select(Name, Score, Result, Age) %>%     # 列の順番を変更
+  arrange(desc(Score)) %>%                 # スコアの降順に並べ替え
+  print()
+
+df %>%
+  group_by(Age) %>%
+  summarise(Average_Score = mean(Score)) %>%
+  print()
+
+df %>%
+  count(Score >= 90, name = "Count") %>%
+  print()
+
+df %>%
+  mutate(Category = case_when(
+    Score >= 90 ~ "A",
+    Score >= 80 ~ "B",
+    TRUE        ~ "C"
+  )) %>%
+  print()
+
+# 欠損値を挿入
+df$Score[3] <- NA
+
+# 欠損値の処理
+df %>%
+  replace_na(list(Score = 0)) %>%
+  print()
+
+df %>%
+  ggplot(aes(x = Age, y = Score, color = Score >= 90)) +
+  geom_point(size = 3) +
+  labs(title = "スコアと年齢の関係", x = "年齢", y = "スコア") +
+  theme_minimal()
+
