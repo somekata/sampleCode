@@ -1,0 +1,106 @@
+# サンプルデータの作成
+df <- data.frame(
+  ID = 1:5,
+  Name = c("Alice", "Bob", "Charlie", "David", "Eve"),
+  Score = c(85, 90, 78, 88, 92),
+  Age = c(20, 25, 22, 24, 23)
+)
+
+# データの確認
+print(df)
+
+# $記号を使用して列を指定
+df$Score
+
+# インデックスを使用して列を指定
+df[, "Score"]
+
+# インデックス番号で列を指定
+df[, 3]
+
+# インデックスで行を指定
+df[1, ]    # 1行目を取り出し
+df[2:4, ]  # 2行目から4行目を取り出し
+
+# 2行目の「Score」を取り出す
+df[2, "Score"]
+
+# 2行目の3列目を取り出す
+df[2, 3]
+
+# 1行目を削除
+df[-1, ]
+
+# 1〜3行目を削除
+df[-c(1:3), ]
+
+# 「Score」列を削除
+df[, -3]
+
+# 複数の列 (「Score」と「Age」) を削除
+df[, -c(3, 4)]
+
+# スコアが90以上の行を抽出
+df[df$Score >= 90, ]
+
+# 年齢が25歳未満の行を抽出
+df[df$Age < 25, ]
+
+# 条件指定での抽出
+subset(df, Score >= 90)
+
+# 条件と列指定の組み合わせ
+subset(df, Score >= 90, select = c(Name, Score))
+
+# スコアの昇順
+df[order(df$Score), ]
+
+# スコアの降順
+df[order(-df$Score), ]
+
+# 合格・不合格のラベルを追加
+df$Result <- ifelse(df$Score >= 80, "合格", "不合格")
+print(df)
+
+# 「Score」を5点加算
+df$Score <- df$Score + 5
+print(df)
+
+# 列名を変更
+names(df)[2] <- "Full_Name"
+print(df)
+
+# 行名を割り当てる
+rownames(df) <- c("A", "B", "C", "D", "E")
+print(df)
+
+# サンプルデータ (欠損値あり)
+df$Score[3] <- NA
+
+# 欠損値の確認
+is.na(df$Score)
+
+# 欠損値の行を除外
+na.omit(df)
+
+# 欠損値を0に補完
+df$Score[is.na(df$Score)] <- 0
+print(df)
+
+# 新しいデータ
+new_col <- data.frame(Grade = c("B", "A", "C", "B", "A"))
+
+# 列方向に結合
+cbind(df, new_col)
+
+# 新しい行データ
+new_row <- data.frame(ID = 6, Name = "Frank", Score = 80, Age = 30)
+
+# 行方向に結合
+rbind(df, new_row)
+
+# 年齢ごとのスコア平均
+tapply(df$Score, df$Age, mean)
+
+# 年齢ごとのスコア平均
+aggregate(Score ~ Age, data = df, mean)
